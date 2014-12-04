@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Dungeon Tiles" tilewidth="32" tileheight="32">
+  <image source="MapTiles2.png" trans="fdb1c3" width="320" height="320"/>
+  <tile id="0">
+   <properties>
+    <property name="solid" value="false"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="solid" value="false"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="solid" value="false"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="solid" value="false"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Main layer" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzllr1uwzAMhGXFXSIDHdNma5r3f8a6gAh8vVCU5BTo0IFw7FB3En9OPKeUzn9kl91eA3v7JRzFWnfbdsv1+W2lPpfdToO8K9bnurZUs9+nhj99lmqfk/snd8F5coc3g5NnJ5Z9Vxxblx08j7eAx3yM4323F7Fr9SXOh+OTgdnaJ89V8O7ldw3+U9zcwNJ9qt0amKWT+3t6rK/RGm31yT39rNtFOOw3Y9yLTxS3Ilhe7j2zXD/Dy1qd6W3lHdEZ5ot9GeVX12qceQ6zTb6xLtmfmj/6efn2+kj5rAYth1cHS/NrfU0s+twavKpVzInXb9pja7C+VS+tuM7U4Joe9bW13jvHFTHydKNXt4z1kX3P9ht73GI3y0sdHL37R2qgp4O8g4/ozNGa6Onq6Hx0cb55NaGa1Lp3TL9ML3h/sg84R0V3KuuCfU0t0flE5xLOR7wPI17VOU+XqE2qoXyP5hytYZ1NopnD47KYU1+3Dg7POzLrqCYyVszvCI7GOcoL76Et+XrBnvZ6OZqzZv1H9OI/2RflcyH/
+  </data>
+ </layer>
+</map>

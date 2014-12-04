@@ -5,6 +5,7 @@ package com.paranoidalien.game.dules.Utils;
  */
 public class Constants {
 
-    public static final int WORLD_WIDTH = 200;
-    public static final int WORLD_HEIGHT = 200;
+    public static final int WORLD_WIDTH = 30;
+    public static final int WORLD_HEIGHT = 30;
+    public static final float ENTITY_SPEED = 3;
 }
