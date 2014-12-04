@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
-        cam = new OrthographicCamera(16, 16 * (h / w));
+        cam = new OrthographicCamera(15, 15 * (h / w));
         cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         cam.update();
 
@@ -79,10 +79,6 @@ public class GameScreen implements Screen {
         batch.begin();
         player.draw();
         batch.end();
-
-
-
-
 
 
     }
