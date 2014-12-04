@@ -25,7 +25,8 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-    private Player player;    
+    private Player player;
+    private int tempZoom = 38;
 
     public GameScreen(final DULES game){
         this.game = game;
@@ -42,7 +43,7 @@ public class GameScreen implements Screen {
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
-        cam = new OrthographicCamera(16, 16 * (h / w));
+        cam = new OrthographicCamera(tempZoom, tempZoom * (h / w));
         cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         cam.update();
 
