@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Center camera on player
-        //cam.position.set(player.getLocation(),0);
+        cam.position.set(player.getLocation(),0);
 
         cam.update();
         batch.setProjectionMatrix(cam.combined);
