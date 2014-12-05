@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.Utils.Constants;
 
@@ -72,7 +73,8 @@ public class Player extends Character {
         }
         if (leftMove){
             // Add logic to move one tile to left with smooth transition
-            sprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
+            sprite.translate(-(Constants.ENTITY_SPEED) * 0.015f , 0.0f);
+
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
                 // Snap into position
@@ -82,7 +84,7 @@ public class Player extends Character {
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
-            sprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
+            sprite.translate(Constants.ENTITY_SPEED * 0.015f , 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
                 // Snap into position
@@ -92,7 +94,7 @@ public class Player extends Character {
         }
         if (upMove){
             // Add logic to move one tile up with smooth transition
-            sprite.translate(0, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
+            sprite.translate(0, Constants.ENTITY_SPEED * 0.015f);
             if ((getLocation().y - originalLoc.y) >= 1){
                 originalLoc.y += 1;
                 // Snap into position
@@ -102,7 +104,7 @@ public class Player extends Character {
         }
         if (downMove){
             // Add logic to move one tile down with smooth transition
-            sprite.translate(0, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
+            sprite.translate(0, -(Constants.ENTITY_SPEED) * 0.015f);
             if ((originalLoc.y - getLocation().y) >= 1){
                 originalLoc.y -= 1;
                 // Snap into position
