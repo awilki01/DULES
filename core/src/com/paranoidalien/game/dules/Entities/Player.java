@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.Utils.Constants;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Project: DULES
@@ -19,6 +23,8 @@ public class Player extends Character {
     private Sprite sprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
+    private BigDecimal bd;
+    private MathContext mc;
 
     public Player(SpriteBatch batch){
         this.batch = batch;
@@ -36,6 +42,7 @@ public class Player extends Character {
         //Initialize move booleans to false
         leftMove = rightMove = upMove = downMove = false;
 
+        mc = new MathContext(2);
     }
 
     @Override
@@ -65,6 +72,13 @@ public class Player extends Character {
 
     @Override
     public void update(){
+        // Round Delta time to be used for player movement
+        // We tried to use delta time, but there is an apparent rounding
+        // error with openGL and that many significant digits that caused
+        // artifacts with the tilemap (occasional white vertical lines)
+        // We could not do this during the game loop (player move method)
+        // as every iteration caused a new BigDecimal and new MathContext
+        // to be created thus memory leak.
 
         if (!leftMove && !rightMove && !upMove && !downMove){
             originalLoc.x = getLocation().x;
@@ -72,43 +86,64 @@ public class Player extends Character {
         }
         if (leftMove){
             // Add logic to move one tile to left with smooth transition
-            sprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
+            bd = new BigDecimal(Gdx.graphics.getDeltaTime());
+            bd = bd.round(mc);
+            float roundedDelta = bd.floatValue();
+            System.out.println(roundedDelta);
+            sprite.translate(-(Constants.ENTITY_SPEED) * roundedDelta  , 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
                 // Snap into position
                 setLocation(originalLoc);
                 leftMove = false;
             }
+            bd = null;
+
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
-            sprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
+            bd = new BigDecimal(Gdx.graphics.getDeltaTime());
+            bd = bd.round(mc);
+            float roundedDelta = bd.floatValue();
+            System.out.println(roundedDelta);
+            sprite.translate(Constants.ENTITY_SPEED * roundedDelta , 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
                 // Snap into position
                 setLocation(originalLoc);
                 rightMove = false;
             }
+            bd = null;
         }
         if (upMove){
             // Add logic to move one tile up with smooth transition
-            sprite.translate(0, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
+            bd = new BigDecimal(Gdx.graphics.getDeltaTime());
+            bd = bd.round(mc);
+            float roundedDelta = bd.floatValue();
+            System.out.println(roundedDelta);
+            sprite.translate(0, Constants.ENTITY_SPEED * roundedDelta);
             if ((getLocation().y - originalLoc.y) >= 1){
                 originalLoc.y += 1;
                 // Snap into position
                 setLocation(originalLoc);
                 upMove = false;
             }
+            bd = null;
         }
         if (downMove){
             // Add logic to move one tile down with smooth transition
-            sprite.translate(0, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
+            bd = new BigDecimal(Gdx.graphics.getDeltaTime());
+            bd = bd.round(mc);
+            float roundedDelta = bd.floatValue();
+            System.out.println(roundedDelta);
+            sprite.translate(0, -(Constants.ENTITY_SPEED) * roundedDelta);
             if ((originalLoc.y - getLocation().y) >= 1){
                 originalLoc.y -= 1;
                 // Snap into position
                 setLocation(originalLoc);
                 downMove = false;
             }
+            bd = null;
 
         }
 

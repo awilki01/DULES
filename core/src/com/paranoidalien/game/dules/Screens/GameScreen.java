@@ -14,6 +14,11 @@ import com.paranoidalien.game.dules.Entities.Player;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
 import com.paranoidalien.game.dules.Utils.Constants;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 /**
  * Created by Adam on 11/24/2014.
  */
@@ -25,7 +30,8 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-    private Player player;    
+    private Player player;
+    private int tempZoom = 38;
 
     public GameScreen(final DULES game){
         this.game = game;
@@ -42,7 +48,9 @@ public class GameScreen implements Screen {
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
-        cam = new OrthographicCamera(15, 15 * (h / w));
+
+        //cam = new OrthographicCamera(15, 15 * (h / w));
+        cam = new OrthographicCamera(tempZoom, tempZoom * (h / w));
         cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         cam.update();
 
@@ -54,25 +62,27 @@ public class GameScreen implements Screen {
         // Create input processor
         Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
 
+
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.1f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);  // need to research this a bit...saw this online
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.setProjectionMatrix(cam.combined);
-
-        tiledMapRenderer.setView(cam);
-        tiledMapRenderer.render();
-
-        // Update entities
-        player.update();
 
         // Center camera on player
         cam.position.set(player.getLocation(),0);
         cam.update();
+
+        batch.setProjectionMatrix(cam.combined);
+
+        // Update entities
+        player.update();
+
+        tiledMapRenderer.setView(cam);
+        tiledMapRenderer.render();
 
 
         // Draw sprites
