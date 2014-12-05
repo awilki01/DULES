@@ -32,6 +32,8 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
     private int tempZoom = 38;
+    private BigDecimal bd;
+    private float roundedDelta;
 
     public GameScreen(final DULES game){
         this.game = game;
@@ -54,13 +56,30 @@ public class GameScreen implements Screen {
         cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         cam.update();
 
+        // Round Delta time to be used for player movement
+        // We tried to use delta time, but there is an apparent rounding
+        // error with openGL and that many significant digits that caused
+        // artifacts with the tilemap (occasional white vertical lines)
+        // We could not do this during the game loop (player move method)
+        // as every iteration caused a new BigDecimal and new MathContext
+        // to be created thus memory leak.
+
+        bd = new BigDecimal(Gdx.graphics.getDeltaTime());
+        bd = bd.round(new MathContext(2));
+        roundedDelta = bd.floatValue();
+
         // Create characters-----------------------------------------
         // Create Player
-        player = new Player(batch);
+        player = new Player(batch, roundedDelta);
         player.setLocation(new Vector2(15f, 15f));
+
+        System.out.println(roundedDelta);
 
         // Create input processor
         Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
+
+
+
 
 
     }

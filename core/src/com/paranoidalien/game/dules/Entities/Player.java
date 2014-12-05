@@ -23,9 +23,11 @@ public class Player extends Character {
     private Sprite sprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
+    private float roundedDelta;
 
-    public Player(SpriteBatch batch){
+    public Player(SpriteBatch batch, float roundedDelta){
         this.batch = batch;
+        this.roundedDelta = roundedDelta;
 
         texture = new Texture(Gdx.files.internal("smiley.png"));
         sprite = new Sprite(texture);
@@ -70,13 +72,6 @@ public class Player extends Character {
 
     @Override
     public void update(){
-        // Round Delta time to be used for player movement
-        // We tried to use delta time, but there is an apparent rounding
-        // error with openGL and that many significant digits that caused
-        // artifacts with the tilemap (occasional white vertical lines)
-        // We could not do this during the game loop (player move method)
-        // as every iteration caused a new BigDecimal and new MathContext
-        // to be created thus memory leak.
 
         if (!leftMove && !rightMove && !upMove && !downMove){
             originalLoc.x = getLocation().x;
@@ -84,7 +79,7 @@ public class Player extends Character {
         }
         if (leftMove){
             // Add logic to move one tile to left with smooth transition
-            sprite.translate(-(Constants.ENTITY_SPEED) * 0.015f  , 0.0f);
+            sprite.translate(-(Constants.ENTITY_SPEED) * roundedDelta  , 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
                 // Snap into position
@@ -95,7 +90,7 @@ public class Player extends Character {
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
-            sprite.translate(Constants.ENTITY_SPEED * 0.015f , 0.0f);
+            sprite.translate(Constants.ENTITY_SPEED * roundedDelta , 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
                 // Snap into position
@@ -104,7 +99,7 @@ public class Player extends Character {
             }
         }
         if (upMove){
-            sprite.translate(0, Constants.ENTITY_SPEED * 0.015f);
+            sprite.translate(0, Constants.ENTITY_SPEED * roundedDelta);
             if ((getLocation().y - originalLoc.y) >= 1){
                 originalLoc.y += 1;
                 // Snap into position
@@ -113,7 +108,7 @@ public class Player extends Character {
             }
         }
         if (downMove){
-            sprite.translate(0, -(Constants.ENTITY_SPEED) * 0.015f);
+            sprite.translate(0, -(Constants.ENTITY_SPEED) * roundedDelta);
             if ((originalLoc.y - getLocation().y) >= 1){
                 originalLoc.y -= 1;
                 // Snap into position
