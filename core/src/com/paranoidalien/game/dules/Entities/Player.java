@@ -39,8 +39,6 @@ public class Player extends Character {
 
         //Initialize move booleans to false
         leftMove = rightMove = upMove = downMove = false;
-
-
     }
 
     @Override
@@ -71,13 +69,21 @@ public class Player extends Character {
     @Override
     public void update(){
 
+        // The 0.015f below is just a hardcoded delta time.
+        // I had issues with an apparent openGL rounding
+        // error.  Anytime we used delta time, we got
+        // random vertical white lines on the tile map when
+        // the camera moved.  It needs to be hardcoded to a
+        // multiple of 5 msec for whatever reason to prevent
+        // the lines from showing up.
+
         if (!leftMove && !rightMove && !upMove && !downMove){
             originalLoc.x = getLocation().x;
             originalLoc.y = getLocation().y;
         }
         if (leftMove){
             // Add logic to move one tile to left with smooth transition
-            sprite.translate(-(Constants.ENTITY_SPEED) * 0.015f  , 0.0f);
+            sprite.translate(-(Constants.ENTITY_SPEED) * 0.015f, 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
                 // Snap into position
@@ -88,7 +94,7 @@ public class Player extends Character {
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
-            sprite.translate(Constants.ENTITY_SPEED * 0.015f , 0.0f);
+            sprite.translate(Constants.ENTITY_SPEED * 0.015f, 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
                 // Snap into position

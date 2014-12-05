@@ -1,6 +1,7 @@
 package com.paranoidalien.game.dules.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,7 +28,7 @@ import java.math.MathContext;
 public class GameScreen implements Screen {
     final DULES game;
     private OrthographicCamera cam;
-    private SpriteBatch batch;
+    private SpriteBatch batch, playerBatch;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
@@ -71,24 +72,22 @@ public class GameScreen implements Screen {
         //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);  // need to research this a bit...saw this online
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Center camera on player
-        cam.position.set(player.getLocation(),0);
-        cam.update();
-
         batch.setProjectionMatrix(cam.combined);
-
-        // Update entities
-        player.update();
 
         tiledMapRenderer.setView(cam);
         tiledMapRenderer.render();
 
+        // Update entities
+        player.update();
+
+        // Center camera on player
+        cam.position.set(player.getLocation(),0);
+        cam.update();
 
         // Draw sprites
         batch.begin();
         player.draw();
         batch.end();
-
     }
 
     @Override
