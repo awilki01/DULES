@@ -88,6 +88,7 @@ public class GameScreen implements Screen {
         batch.begin();
         player.draw();
         batch.end();
+
     }
 
     @Override

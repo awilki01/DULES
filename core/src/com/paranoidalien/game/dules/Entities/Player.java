@@ -90,7 +90,6 @@ public class Player extends Character {
                 setLocation(originalLoc);
                 leftMove = false;
             }
-
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
