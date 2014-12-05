@@ -81,7 +81,24 @@ public class GameScreen implements Screen {
         player.update();
 
         // Center camera on player
-        cam.position.set(player.getLocation(),0);
+        //cam.position.set(player.getLocation(),0);
+
+
+        // Test code - REMOVE -----------------------
+        if (Gdx.input.isKeyPressed(Input.Keys.W)){
+            cam.translate(0, 3 * delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)){
+            cam.translate(0, -3 * delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)){
+            cam.translate(-3 * delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)){
+            cam.translate(3 * delta, 0);
+        }
+        // ------------------------------------------
+
         cam.update();
 
         // Draw sprites
