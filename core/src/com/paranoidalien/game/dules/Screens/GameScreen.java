@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
         float h = Gdx.graphics.getHeight();
 
         // Create tile map from Tiled .tmx file
-        tiledMap = new TmxMapLoader().load("adam_test5.tmx");
+        tiledMap = new TmxMapLoader().load("map01.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
 
         // Create camera and only project 35 world units wide
@@ -56,11 +56,11 @@ public class GameScreen implements Screen {
 
         // Create characters-----------------------------------------
         // Create Player
-        //player = new Player(batch);
-        //player.setLocation(new Vector2(15f, 15f));
+        player = new Player(batch);
+        player.setLocation(new Vector2(15f, 15f));
 
         // Create input processor
-        //Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
+        Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
 
 
 
@@ -78,24 +78,13 @@ public class GameScreen implements Screen {
         tiledMapRenderer.render();
 
         // Update entities
-        //player.update();
+        player.update();
 
         // Center camera on player
-        //cam.position.set(player.getLocation(),0);
+        cam.position.set(player.getLocation(),0);
 
 
-        // Test code - REMOVE -----------------------
-        /*
 
-        vec1 = player.getLocation();
-        vec2.x = vec1.x + 3;
-        vec2.y = vec1.y + 3;
-        vec1.lerp(vec2, 0.5f);
-        cam.position.set(vec2,0);
-        System.out.println("vec1: " + vec1);
-        System.out.println("vec2: " + vec2);
-        System.out.println(cam.position);
-        */
         if (Gdx.input.isKeyPressed(Input.Keys.W)){
             cam.translate(0, 3 * delta);
         }
@@ -114,9 +103,9 @@ public class GameScreen implements Screen {
         cam.update();
 
         // Draw sprites
-       // batch.begin();
-       // player.draw();
-       // batch.end();
+        batch.begin();
+        player.draw();
+        batch.end();
 
     }
 
