@@ -17,11 +17,22 @@ import java.math.MathContext;
  * Project: DULES
  * Created by Adam on 02 December 2014 at 7:38 PM.
  */
+
+/* NOTES:
+        - Could not move player sprite and have camera follow.  It worked, but
+          there was a slight synchronization issue where the sprite would move
+          a pixel or two before or after the camera.  It would snap back in place just fine,
+          but it did not look and/or feel right.  As a result, I created a shadow sprite (no texture)
+          that was used to represent the position of the player and was used by the main camera to follow.
+          The actual player sprite never moves, the main cam moves underneath it.  Playersprite uses it's own
+          camera.........
+*/
+
 public class Player extends Character {
 
     private SpriteBatch batch;
     private Texture texture;
-    private Sprite sprite;
+    private Sprite sprite, shadowSprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
 
@@ -30,6 +41,9 @@ public class Player extends Character {
 
         texture = new Texture(Gdx.files.internal("smiley.png"));
         sprite = new Sprite(texture);
+
+        // used not for display but to represent position of sprite
+        shadowSprite = new Sprite();
 
         // One world unit high and wide
         sprite.setSize(1, 1);
@@ -40,6 +54,8 @@ public class Player extends Character {
 
         //Initialize move booleans to false
         leftMove = rightMove = upMove = downMove = false;
+
+        sprite.setPosition(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2);
     }
 
     @Override
@@ -49,14 +65,15 @@ public class Player extends Character {
 
     @Override
     public Vector2 getLocation() {
-        vec.x = sprite.getX();
-        vec.y = sprite.getY();
+        vec.x = shadowSprite.getX();
+        vec.y = shadowSprite.getY();
         return vec;
     }
 
     @Override
     public void setLocation(Vector2 vecSet) {
-        sprite.setPosition(vecSet.x, vecSet.y);
+        shadowSprite.setPosition(vecSet.x, vecSet.y);
+        //sprite.setPosition(vecSet.x, vecSet.y);
     }
 
     @Override
@@ -70,21 +87,13 @@ public class Player extends Character {
     @Override
     public void update(){
 
-        // The 0.015f below is just a hardcoded delta time.
-        // I had issues with an apparent openGL rounding
-        // error.  Anytime we used delta time, we got
-        // random vertical white lines on the tile map when
-        // the camera moved.  It needs to be hardcoded to a
-        // multiple of 5 msec for whatever reason to prevent
-        // the lines from showing up.
-
         if (!leftMove && !rightMove && !upMove && !downMove){
             originalLoc.x = getLocation().x;
             originalLoc.y = getLocation().y;
         }
         if (leftMove){
             // Add logic to move one tile to left with smooth transition
-            sprite.translate(-(Constants.ENTITY_SPEED) * 0.015f, 0.0f);
+            shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
                 // Snap into position
@@ -94,7 +103,7 @@ public class Player extends Character {
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition
-            sprite.translate(Constants.ENTITY_SPEED * 0.015f, 0.0f);
+            shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
                 // Snap into position
@@ -103,7 +112,7 @@ public class Player extends Character {
             }
         }
         if (upMove){
-            sprite.translate(0, Constants.ENTITY_SPEED * 0.015f);
+            shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
             if ((getLocation().y - originalLoc.y) >= 1){
                 originalLoc.y += 1;
                 // Snap into position
@@ -112,7 +121,7 @@ public class Player extends Character {
             }
         }
         if (downMove){
-            sprite.translate(0, -(Constants.ENTITY_SPEED) * 0.015f);
+            shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
             if ((originalLoc.y - getLocation().y) >= 1){
                 originalLoc.y -= 1;
                 // Snap into position

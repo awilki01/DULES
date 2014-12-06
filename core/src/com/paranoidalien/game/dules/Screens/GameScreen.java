@@ -9,17 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.DULES;
 import com.paranoidalien.game.dules.Entities.Player;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
 import com.paranoidalien.game.dules.Utils.Constants;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 /**
  * Created by Adam on 11/24/2014.
@@ -28,7 +22,7 @@ import java.math.MathContext;
 
 public class GameScreen implements Screen {
     final DULES game;
-    private OrthographicCamera cam;
+    private OrthographicCamera mainCam, playerCam;
     private SpriteBatch batch, playerBatch;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -37,6 +31,7 @@ public class GameScreen implements Screen {
     public GameScreen(final DULES game){
         this.game = game;
         batch = new SpriteBatch();
+        playerBatch = new SpriteBatch();
 
         // Get actual screen resolution in pixels
         float w = Gdx.graphics.getWidth();
@@ -50,20 +45,24 @@ public class GameScreen implements Screen {
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
 
-        cam = new OrthographicCamera(38, 38 * (h / w));
-        cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
-        cam.update();
+        //tileCam will be used for entities other than the HUD and Player.
+        mainCam = new OrthographicCamera(38, 38 * (h / w));
+        mainCam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
+        mainCam.update();
+
+        // Needed a separate playerCam because whenever we tried to move the player sprite,
+        // there would be an ever so slight synchronization issue between the sprite and camera.
+        playerCam = new OrthographicCamera(38, 38 * (h / w));
+        playerCam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
+        playerCam.update();
 
         // Create characters-----------------------------------------
         // Create Player
-        player = new Player(batch);
-        player.setLocation(new Vector2(15f, 15f));
+        player = new Player(playerBatch);
+        player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2));
 
         // Create input processor
-        Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
-
-
-
+        Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
     }
 
     @Override
@@ -72,40 +71,43 @@ public class GameScreen implements Screen {
         //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);  // need to research this a bit...saw this online
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(cam.combined);
+        batch.setProjectionMatrix(mainCam.combined);
+        playerBatch.setProjectionMatrix(playerCam.combined);
 
-        tiledMapRenderer.setView(cam);
+        tiledMapRenderer.setView(mainCam);
         tiledMapRenderer.render();
 
-        // Update entities
+        // Update entities here - will create an update entities class later
+        // with array of Characters (see Character class)
         player.update();
 
         // Center camera on player
-        cam.position.set(player.getLocation(),0);
+        mainCam.position.set(player.getLocation(),0);
 
-
-
+        // This input will need to be moved to it's own class later
         if (Gdx.input.isKeyPressed(Input.Keys.W)){
-            cam.translate(0, 3 * delta);
+            player.move(false, false, true, false);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            cam.translate(0, -3 * delta);
+            player.move(false, false, false, true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            cam.translate(-3 * delta, 0);
+            player.move(true, false, false, false);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)){
-            cam.translate(3 * delta, 0);
+            player.move(false, true, false, false);
         }
-        // ------------------------------------------
+        // ---------------------------------------------------------
 
 
-        cam.update();
+        mainCam.update();
+        playerCam.update(); // Only needed for zoom at the moment
+        //hudCam.update(); // will create this much later
 
         // Draw sprites
-        batch.begin();
+        playerBatch.begin();
         player.draw();
-        batch.end();
+        playerBatch.end();
 
     }
 

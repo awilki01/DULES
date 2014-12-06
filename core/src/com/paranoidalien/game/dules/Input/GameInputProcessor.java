@@ -9,11 +9,12 @@ import com.paranoidalien.game.dules.Entities.Player;
  * Created by Adam on 11/24/2014.
  */
 public class GameInputProcessor implements InputProcessor{
-    private OrthographicCamera cam;
+    private OrthographicCamera tileCam, playerCam;
     private Player player;
 
-    public GameInputProcessor(OrthographicCamera cam, Player player){
-        this.cam = cam;
+    public GameInputProcessor(OrthographicCamera tileCam, OrthographicCamera playerCam, Player player){
+        this.tileCam = tileCam;
+        this.playerCam = playerCam;
         this.player = player;
     }
 
@@ -66,7 +67,7 @@ public class GameInputProcessor implements InputProcessor{
 
     @Override
     public boolean scrolled(int amount) {
-        cam.zoom += amount * 0.1f;
+        tileCam.zoom = playerCam.zoom += amount * 0.1f;
 
         return false;
     }
