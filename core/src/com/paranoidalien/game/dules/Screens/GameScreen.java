@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.DULES;
 import com.paranoidalien.game.dules.Entities.Player;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
+import com.paranoidalien.game.dules.Utils.CollisionCheck;
 import com.paranoidalien.game.dules.Utils.Constants;
 
 /**
@@ -25,8 +27,10 @@ public class GameScreen implements Screen {
     private OrthographicCamera mainCam, playerCam;
     private SpriteBatch batch, playerBatch;
     private TiledMap tiledMap;
+    private TiledMapTileLayer tiledMapLayer;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
+    private CollisionCheck collisionCheck;
 
     public GameScreen(final DULES game){
         this.game = game;
@@ -40,6 +44,9 @@ public class GameScreen implements Screen {
         // Create tile map from Tiled .tmx file
         tiledMap = new TmxMapLoader().load("map01.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
+        tiledMapLayer = new TiledMapTileLayer(Constants.WORLD_WIDTH,Constants.WORLD_HEIGHT,32,32);
+
+
 
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
@@ -56,13 +63,18 @@ public class GameScreen implements Screen {
         playerCam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         playerCam.update();
 
+        // Instantiate collision check
+        collisionCheck = new CollisionCheck(tiledMap, tiledMapLayer);
+
         // Create characters-----------------------------------------
         // Create Player
-        player = new Player(playerBatch);
+        player = new Player(playerBatch, collisionCheck);
         player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2));
 
         // Create input processor
         Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
+
+
     }
 
     @Override

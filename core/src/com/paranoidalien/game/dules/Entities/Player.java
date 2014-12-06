@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.Screens.GameScreen;
+import com.paranoidalien.game.dules.Utils.CollisionCheck;
 import com.paranoidalien.game.dules.Utils.Constants;
 
 import java.math.BigDecimal;
@@ -36,9 +38,11 @@ public class Player extends Character {
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
     private boolean currentlyMoving;
+    private CollisionCheck collisionCheck;
 
-    public Player(SpriteBatch batch){
+    public Player(SpriteBatch batch, CollisionCheck collisionCheck){
         this.batch = batch;
+        this.collisionCheck = collisionCheck;
 
         texture = new Texture(Gdx.files.internal("smiley.png"));
         sprite = new Sprite(texture);
@@ -89,8 +93,10 @@ public class Player extends Character {
 
     @Override
     public void update(){
-        // test code
-        System.out.println("Player position: " + getLocation());
+        // test code -----------------------------
+        //System.out.println("Player position: " + getLocation());
+        collisionCheck.collision(this);
+        // ---------------------------------------
 
         if (!leftMove && !rightMove && !upMove && !downMove){
             currentlyMoving = false;
