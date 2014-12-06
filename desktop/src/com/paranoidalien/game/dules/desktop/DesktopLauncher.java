@@ -17,6 +17,7 @@ public class DesktopLauncher {
         config.useGL30 = false;
         config.width = 1280;
         config.height = 720;
+        config.vSyncEnabled = true;
 
 		new LwjglApplication(new DULES(), config);
 	}

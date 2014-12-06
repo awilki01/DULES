@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
         float h = Gdx.graphics.getHeight();
 
         // Create tile map from Tiled .tmx file
-        tiledMap = new TmxMapLoader().load("test_map.tmx");
+        tiledMap = new TmxMapLoader().load("solid_black.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
 
         // Create camera and only project 35 world units wide
@@ -67,8 +67,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.1f, 1);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 1, 1);
         //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);  // need to research this a bit...saw this online
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
