@@ -43,7 +43,11 @@ public class GameScreen implements Screen {
         float h = Gdx.graphics.getHeight();
 
         // Create tile map from Tiled .tmx file
+<<<<<<< HEAD
         tiledMap = new TmxMapLoader().load("desert.tmx");
+=======
+        tiledMap = new TmxMapLoader().load("adam_test1.tmx");
+>>>>>>> 37e7569ae6e3627c47e905f85983d937a43853a4
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
 
         // Create camera and only project 35 world units wide
