@@ -33,7 +33,6 @@ public class GameScreen implements Screen {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
-    private Vector2 vec1, vec2;
 
     public GameScreen(final DULES game){
         this.game = game;
@@ -44,39 +43,34 @@ public class GameScreen implements Screen {
         float h = Gdx.graphics.getHeight();
 
         // Create tile map from Tiled .tmx file
-        tiledMap = new TmxMapLoader().load("sewers.tmx");
+        tiledMap = new TmxMapLoader().load("desert.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
 
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
 
-        //cam = new OrthographicCamera(15, 15 * (h / w));
         cam = new OrthographicCamera(38, 38 * (h / w));
         cam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         cam.update();
 
         // Create characters-----------------------------------------
         // Create Player
-        player = new Player(batch);
-        player.setLocation(new Vector2(15f, 15f));
+        //player = new Player(batch);
+        //player.setLocation(new Vector2(15f, 15f));
 
         // Create input processor
-        Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
+        //Gdx.input.setInputProcessor(new GameInputProcessor(cam, player));
 
-        // Test code
-        vec1 = new Vector2();
-        vec2 = new Vector2();
 
 
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0.3f, 1);
         //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);  // need to research this a bit...saw this online
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //Gdx.gl.glClear(GL20.GL_NEAREST);
 
         batch.setProjectionMatrix(cam.combined);
 
@@ -84,7 +78,7 @@ public class GameScreen implements Screen {
         tiledMapRenderer.render();
 
         // Update entities
-        player.update();
+        //player.update();
 
         // Center camera on player
         //cam.position.set(player.getLocation(),0);
@@ -120,9 +114,9 @@ public class GameScreen implements Screen {
         cam.update();
 
         // Draw sprites
-        batch.begin();
-        player.draw();
-        batch.end();
+       // batch.begin();
+       // player.draw();
+       // batch.end();
 
     }
 
