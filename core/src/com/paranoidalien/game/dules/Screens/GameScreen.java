@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
         // with array of Characters (see Character class)
         player.update();
 
-        // Center camera on player
+        // Center camera on player (actually centers on shadow sprite)
         mainCam.position.set(player.getLocation(),0);
 
         // This input will need to be moved to it's own class later

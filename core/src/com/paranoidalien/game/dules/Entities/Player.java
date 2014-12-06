@@ -35,6 +35,7 @@ public class Player extends Character {
     private Sprite sprite, shadowSprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
+    private boolean currentlyMoving;
 
     public Player(SpriteBatch batch){
         this.batch = batch;
@@ -78,21 +79,28 @@ public class Player extends Character {
 
     @Override
     public void move(boolean leftMove, boolean rightMove, boolean upMove, boolean downMove){
-        this.leftMove = leftMove;
-        this.rightMove = rightMove;
-        this.upMove = upMove;
-        this.downMove = downMove;
+        if (!currentlyMoving) {
+            this.leftMove = leftMove;
+            this.rightMove = rightMove;
+            this.upMove = upMove;
+            this.downMove = downMove;
+        }
     }
 
     @Override
     public void update(){
 
+        System.out.println(getLocation());
         if (!leftMove && !rightMove && !upMove && !downMove){
+            currentlyMoving = false;
             originalLoc.x = getLocation().x;
             originalLoc.y = getLocation().y;
+        } else {
+            currentlyMoving = true;
         }
+
         if (leftMove){
-            // Add logic to move one tile to left with smooth transition
+            // Add logic to move one tile to left with smooth transition - the playerCam follows this
             shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1){
                 originalLoc.x -= 1;
@@ -102,7 +110,7 @@ public class Player extends Character {
             }
         }
         if (rightMove){
-           // Add logic to move one tile to right with smooth transition
+           // Add logic to move one tile to right with smooth transition - the playerCam follows this
             shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1){
                 originalLoc.x += 1;
@@ -112,6 +120,7 @@ public class Player extends Character {
             }
         }
         if (upMove){
+            // Add logic to move one tile to right with smooth transition - the playerCam follows this
             shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
             if ((getLocation().y - originalLoc.y) >= 1){
                 originalLoc.y += 1;
@@ -121,6 +130,7 @@ public class Player extends Character {
             }
         }
         if (downMove){
+            // Add logic to move one tile to right with smooth transition - the playerCam follows this
             shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
             if ((originalLoc.y - getLocation().y) >= 1){
                 originalLoc.y -= 1;
@@ -128,9 +138,6 @@ public class Player extends Character {
                 setLocation(originalLoc);
                 downMove = false;
             }
-
         }
-
     }
-
 }
