@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.paranoidalien.game.dules.Screens.GameScreen;
 import com.paranoidalien.game.dules.Utils.Constants;
 
 import java.math.BigDecimal;

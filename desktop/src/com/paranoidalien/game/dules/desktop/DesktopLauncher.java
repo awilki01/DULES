@@ -15,8 +15,10 @@ public class DesktopLauncher {
         config.title = "DULES";
         config.resizable = false;
         config.useGL30 = false;
-        config.width = 1280;
-        config.height = 720;
+        config.width = 1920;
+        config.height = 1080;
+        config.vSyncEnabled = false;
+        //config.foregroundFPS = 120;
 
 		new LwjglApplication(new DULES(), config);
 	}
