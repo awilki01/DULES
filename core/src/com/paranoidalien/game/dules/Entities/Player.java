@@ -89,8 +89,9 @@ public class Player extends Character {
 
     @Override
     public void update(){
+        // test code
+        System.out.println("Player position: " + getLocation());
 
-        System.out.println(getLocation());
         if (!leftMove && !rightMove && !upMove && !downMove){
             currentlyMoving = false;
             originalLoc.x = getLocation().x;
