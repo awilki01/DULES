@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -44,9 +45,7 @@ public class GameScreen implements Screen {
         // Create tile map from Tiled .tmx file
         tiledMap = new TmxMapLoader().load("map01.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
-        tiledMapLayer = new TiledMapTileLayer(Constants.WORLD_WIDTH,Constants.WORLD_HEIGHT,32,32);
-
-
+        tiledMapLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Main layer");
 
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
@@ -69,7 +68,7 @@ public class GameScreen implements Screen {
         // Create characters-----------------------------------------
         // Create Player
         player = new Player(playerBatch, collisionCheck);
-        player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2));
+        player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2 + 1)); // The "+ 1" is for the test map onlyddddddddd
 
         // Create input processor
         Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));

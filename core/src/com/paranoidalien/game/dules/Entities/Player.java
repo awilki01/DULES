@@ -93,11 +93,6 @@ public class Player extends Character {
 
     @Override
     public void update(){
-        // test code -----------------------------
-        //System.out.println("Player position: " + getLocation());
-        collisionCheck.collision(this);
-        // ---------------------------------------
-
         if (!leftMove && !rightMove && !upMove && !downMove){
             currentlyMoving = false;
             originalLoc.x = getLocation().x;
@@ -108,42 +103,50 @@ public class Player extends Character {
 
         if (leftMove){
             // Add logic to move one tile to left with smooth transition - the playerCam follows this
-            shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
-            if ((originalLoc.x - getLocation().x) >= 1){
-                originalLoc.x -= 1;
-                // Snap into position
-                setLocation(originalLoc);
-                leftMove = false;
+            if (!collisionCheck.willCollide(this, "left")) {
+                shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
+                if ((originalLoc.x - getLocation().x) >= 1) {
+                    originalLoc.x -= 1;
+                    // Snap into position
+                    setLocation(originalLoc);
+                    leftMove = false;
+                }
             }
         }
         if (rightMove){
            // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
-            if ((getLocation().x - originalLoc.x) >= 1){
-                originalLoc.x += 1;
-                // Snap into position
-                setLocation(originalLoc);
-                rightMove = false;
+            if (!collisionCheck.willCollide(this, "right")) {
+                shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
+                if ((getLocation().x - originalLoc.x) >= 1) {
+                    originalLoc.x += 1;
+                    // Snap into position
+                    setLocation(originalLoc);
+                    rightMove = false;
+                }
             }
         }
         if (upMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
-            if ((getLocation().y - originalLoc.y) >= 1){
-                originalLoc.y += 1;
-                // Snap into position
-                setLocation(originalLoc);
-                upMove = false;
+            if (!collisionCheck.willCollide(this, "up")) {
+                shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
+                if ((getLocation().y - originalLoc.y) >= 1) {
+                    originalLoc.y += 1;
+                    // Snap into position
+                    setLocation(originalLoc);
+                    upMove = false;
+                }
             }
         }
         if (downMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
-            if ((originalLoc.y - getLocation().y) >= 1){
-                originalLoc.y -= 1;
-                // Snap into position
-                setLocation(originalLoc);
-                downMove = false;
+            if (!collisionCheck.willCollide(this, "down")) {
+                shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
+                if ((originalLoc.y - getLocation().y) >= 1) {
+                    originalLoc.y -= 1;
+                    // Snap into position
+                    setLocation(originalLoc);
+                    downMove = false;
+                }
             }
         }
     }
