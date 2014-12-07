@@ -44,7 +44,7 @@ public class Player extends Character {
         this.batch = batch;
         this.collisionCheck = collisionCheck;
 
-        texture = new Texture(Gdx.files.internal("smiley.png"));
+        texture = new Texture(Gdx.files.internal("green.png"));
         sprite = new Sprite(texture);
 
         // used not for display but to represent position of sprite

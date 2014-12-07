@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.paranoidalien.game.dules.DULES;
+import com.paranoidalien.game.dules.Entities.BadGuy;
 import com.paranoidalien.game.dules.Entities.Player;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
 import com.paranoidalien.game.dules.Utils.CollisionCheck;
@@ -31,6 +32,7 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer tiledMapLayer;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
+    private BadGuy badGuy;
     private CollisionCheck collisionCheck;
 
     public GameScreen(final DULES game){
@@ -69,9 +71,12 @@ public class GameScreen implements Screen {
         // Create Player
         player = new Player(playerBatch, collisionCheck);
         player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2 + 1)); // The "+ 1" is for the test map onlyddddddddd
+        // Create BadGuy
+        badGuy = new BadGuy(batch, collisionCheck);
+        badGuy.setLocation(new Vector2(15, 19));
 
         // Create input processor
-        Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
+        //Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
 
 
     }
@@ -103,9 +108,25 @@ public class GameScreen implements Screen {
         }
         // ---------------------------------------------------------
 
+        // Test input for badGuy -----------------------------------
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)){ // up
+            badGuy.move(false, false, true, false);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){ // down
+            badGuy.move(false, false, false, true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){ // left
+            badGuy.move(true, false, false, false);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){ // right
+            badGuy.move(false, true, false, false);
+        }
+        // ---------------------------------------------------------
+
         // Update entities here - will create an update entities class later
         // with array of Characters (see Character class)
         player.update();
+        badGuy.update();
 
         // Center camera on player (actually centers on shadow sprite)
         mainCam.position.set(player.getLocation(),0);
@@ -114,10 +135,16 @@ public class GameScreen implements Screen {
         playerCam.update(); // Only needed for zoom at the moment
         //hudCam.update(); // will create this much later
 
-        // Draw sprites
+        // Draw player sprite
         playerBatch.begin();
         player.draw();
         playerBatch.end();
+
+        // Draw everything else
+        batch.begin();
+        badGuy.draw();
+        batch.end();
+
 
     }
 
