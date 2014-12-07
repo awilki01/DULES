@@ -37,7 +37,7 @@ public class Player extends Character {
     private Sprite sprite, shadowSprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
-    private boolean currentlyMoving;
+    private boolean currentlyMoving, collision;
     private CollisionCheck collisionCheck;
 
     public Player(SpriteBatch batch, CollisionCheck collisionCheck){
@@ -84,10 +84,36 @@ public class Player extends Character {
     @Override
     public void move(boolean leftMove, boolean rightMove, boolean upMove, boolean downMove){
         if (!currentlyMoving) {
-            this.leftMove = leftMove;
-            this.rightMove = rightMove;
-            this.upMove = upMove;
-            this.downMove = downMove;
+            //this.leftMove = leftMove;
+            //this.rightMove = rightMove;
+            //this.upMove = upMove;
+            //this.downMove = downMove;
+
+            // Perform collision checks
+            if (leftMove) {
+                if (collisionCheck.willCollide(this, "left")){
+                    this.leftMove = false;
+                    collision = true;
+                } else this.leftMove = true;
+            }
+            if (rightMove) {
+                if (collisionCheck.willCollide(this, "right")){
+                    this.rightMove = false;
+                    collision = true;
+                } else this.rightMove = true;
+            }
+            if (upMove) {
+                if (collisionCheck.willCollide(this, "up")){
+                    this.upMove = false;
+                    collision = true;
+                } else this.upMove = true;
+            }
+            if (downMove) {
+                if (collisionCheck.willCollide(this, "down")){
+                    this.downMove = false;
+                    collision = true;
+                } else this.downMove = true;
+            }
         }
     }
 
@@ -102,8 +128,7 @@ public class Player extends Character {
         }
 
         if (leftMove){
-            // Add logic to move one tile to left with smooth transition - the playerCam follows this
-            if (!collisionCheck.willCollide(this, "left")) {
+                // Add logic to move one tile to right with smooth transition - the playerCam follows this
                 shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
                 if ((originalLoc.x - getLocation().x) >= 1) {
                     originalLoc.x -= 1;
@@ -111,11 +136,10 @@ public class Player extends Character {
                     setLocation(originalLoc);
                     leftMove = false;
                 }
-            }
+
         }
         if (rightMove){
-           // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            if (!collisionCheck.willCollide(this, "right")) {
+                // Add logic to move one tile to right with smooth transition - the playerCam follows this
                 shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
                 if ((getLocation().x - originalLoc.x) >= 1) {
                     originalLoc.x += 1;
@@ -123,11 +147,10 @@ public class Player extends Character {
                     setLocation(originalLoc);
                     rightMove = false;
                 }
-            }
+
         }
         if (upMove){
-            // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            if (!collisionCheck.willCollide(this, "up")) {
+                // Add logic to move one tile to right with smooth transition - the playerCam follows this
                 shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
                 if ((getLocation().y - originalLoc.y) >= 1) {
                     originalLoc.y += 1;
@@ -135,11 +158,10 @@ public class Player extends Character {
                     setLocation(originalLoc);
                     upMove = false;
                 }
-            }
+
         }
         if (downMove){
-            // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            if (!collisionCheck.willCollide(this, "down")) {
+                // Add logic to move one tile to right with smooth transition - the playerCam follows this
                 shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
                 if ((originalLoc.y - getLocation().y) >= 1) {
                     originalLoc.y -= 1;
@@ -147,7 +169,7 @@ public class Player extends Character {
                     setLocation(originalLoc);
                     downMove = false;
                 }
-            }
+
         }
     }
 }

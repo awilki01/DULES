@@ -88,28 +88,27 @@ public class GameScreen implements Screen {
         tiledMapRenderer.setView(mainCam);
         tiledMapRenderer.render();
 
+        // This input will need to be moved to it's own class later
+        if (Gdx.input.isKeyPressed(Input.Keys.W)){ // up
+            player.move(false, false, true, false);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)){ // down
+            player.move(false, false, false, true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)){ // left
+            player.move(true, false, false, false);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)){ // right
+            player.move(false, true, false, false);
+        }
+        // ---------------------------------------------------------
+
         // Update entities here - will create an update entities class later
         // with array of Characters (see Character class)
         player.update();
 
         // Center camera on player (actually centers on shadow sprite)
         mainCam.position.set(player.getLocation(),0);
-
-        // This input will need to be moved to it's own class later
-        if (Gdx.input.isKeyPressed(Input.Keys.W)){
-            player.move(false, false, true, false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            player.move(false, false, false, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.move(true, false, false, false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.move(false, true, false, false);
-        }
-        // ---------------------------------------------------------
-
 
         mainCam.update();
         playerCam.update(); // Only needed for zoom at the moment
