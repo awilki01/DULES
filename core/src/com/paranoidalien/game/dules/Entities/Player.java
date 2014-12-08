@@ -84,35 +84,54 @@ public class Player extends Character {
     @Override
     public void move(boolean leftMove, boolean rightMove, boolean upMove, boolean downMove){
         if (!currentlyMoving) {
-            //this.leftMove = leftMove;
-            //this.rightMove = rightMove;
-            //this.upMove = upMove;
-            //this.downMove = downMove;
-
             // Perform collision checks
             if (leftMove) {
                 if (collisionCheck.willCollide(this, "left")){
                     this.leftMove = false;
                     collision = true;
-                } else this.leftMove = true;
+                } else {
+                    this.leftMove = true;
+                    // Had to add the following to prevent corner movement
+                    this.rightMove = false;
+                    this.upMove = false;
+                    this.downMove = false;
+                }
             }
             if (rightMove) {
                 if (collisionCheck.willCollide(this, "right")){
                     this.rightMove = false;
                     collision = true;
-                } else this.rightMove = true;
+                } else {
+                    this.rightMove = true;
+                    // Had to add the following to prevent corner movement
+                    this.leftMove = false;
+                    this.upMove = false;
+                    this.downMove = false;
+                }
             }
             if (upMove) {
                 if (collisionCheck.willCollide(this, "up")){
                     this.upMove = false;
                     collision = true;
-                } else this.upMove = true;
+                } else {
+                    this.upMove = true;
+                    // Had to add the following to prevent corner movement
+                    this.downMove = false;
+                    this.rightMove = false;
+                    this.leftMove = false;
+                }
             }
             if (downMove) {
                 if (collisionCheck.willCollide(this, "down")){
                     this.downMove = false;
                     collision = true;
-                } else this.downMove = true;
+                } else {
+                    this.downMove = true;
+                    // Had to add the following to prevent corner movement
+                    this.upMove = false;
+                    this.rightMove = false;
+                    this.leftMove = false;
+                }
             }
         }
     }
@@ -124,7 +143,7 @@ public class Player extends Character {
             originalLoc.x = getLocation().x;
             originalLoc.y = getLocation().y;
         } else {
-            currentlyMoving = true;
+           currentlyMoving = true;
         }
 
         if (leftMove){
