@@ -20,6 +20,7 @@ public class GameInputProcessor implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
+        /*
         switch(keycode){
             // boolean order: left, right, up, down
             case Input.Keys.DOWN:   player.move(false, false, false, true);
@@ -32,6 +33,7 @@ public class GameInputProcessor implements InputProcessor{
                                     break;
             default:                break;
         }
+        */
         return false;
     }
 

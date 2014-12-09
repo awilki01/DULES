@@ -75,8 +75,8 @@ public class GameScreen implements Screen {
         badGuy = new BadGuy(batch, collisionCheck);
         badGuy.setLocation(new Vector2(15, 19));
 
-        // Create input processor
-        //Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
+        // Create input processor - used for Zoom only now....
+        Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
 
 
     }
