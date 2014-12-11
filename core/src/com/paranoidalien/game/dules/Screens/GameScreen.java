@@ -18,6 +18,8 @@ import com.paranoidalien.game.dules.Entities.Player;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
 import com.paranoidalien.game.dules.Utils.CollisionCheck;
 import com.paranoidalien.game.dules.Utils.Constants;
+import com.paranoidalien.game.dules.Utils.MyOrthogonalTiledMapRenderer;
+
 
 /**
  * Created by Adam on 11/24/2014.
@@ -30,7 +32,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch, playerBatch;
     private TiledMap tiledMap;
     private TiledMapTileLayer tiledMapLayer;
-    private OrthogonalTiledMapRenderer tiledMapRenderer;
+    private MyOrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
     private BadGuy badGuy;
     private CollisionCheck collisionCheck;
@@ -46,7 +48,7 @@ public class GameScreen implements Screen {
 
         // Create tile map from Tiled .tmx file
         tiledMap = new TmxMapLoader().load("map01.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1/32f);
+        tiledMapRenderer = new MyOrthogonalTiledMapRenderer(tiledMap, 1/32f);
         tiledMapLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Main layer");
 
         // Create camera and only project 35 world units wide
