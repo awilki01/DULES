@@ -217,7 +217,10 @@ public class MyOrthogonalTiledMapRenderer extends BatchTiledMapRenderer {
                             }
                         }
                     }
+                    spriteBatch.disableBlending();  // Added because the libGDX wiki indicated blending for large
+                                                    // background images could be costly.
                     spriteBatch.draw(region.getTexture(), vertices, 0, 20);
+                    spriteBatch.enableBlending();   //------------same as above----------------------------------
                 }
                 x += layerTileWidth;
             }

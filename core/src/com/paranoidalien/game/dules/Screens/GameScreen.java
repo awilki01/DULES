@@ -8,13 +8,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.paranoidalien.game.dules.DULES;
 import com.paranoidalien.game.dules.Entities.BadGuy;
 import com.paranoidalien.game.dules.Entities.Player;
+import com.paranoidalien.game.dules.HUD.Inventory;
+import com.paranoidalien.game.dules.HUD.InventoryActor;
 import com.paranoidalien.game.dules.Input.GameInputProcessor;
 import com.paranoidalien.game.dules.Utils.CollisionCheck;
 import com.paranoidalien.game.dules.Utils.Constants;
@@ -28,25 +31,29 @@ import com.paranoidalien.game.dules.Utils.MyOrthogonalTiledMapRenderer;
 
 public class GameScreen implements Screen {
     final DULES game;
-    private OrthographicCamera mainCam, playerCam;
-    private SpriteBatch batch, playerBatch;
+    private OrthographicCamera mainCam, playerCam, hudCam;
+    private SpriteBatch batch, playerBatch, hudBatch;
     private TiledMap tiledMap;
     private TiledMapTileLayer tiledMapLayer;
     private MyOrthogonalTiledMapRenderer tiledMapRenderer;
     private Player player;
     private BadGuy badGuy;
     private CollisionCheck collisionCheck;
+    private Inventory inventory;
+    private InventoryActor inventoryActor;
+    private Stage uiStage;
 
     public GameScreen(final DULES game){
         this.game = game;
         batch = new SpriteBatch();
         playerBatch = new SpriteBatch();
+        hudBatch = new SpriteBatch();
 
         // Get actual screen resolution in pixels
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        // Create tile map from Tiled .tmx file
+        // Main tiled map
         tiledMap = new TmxMapLoader().load("map01.tmx");
         tiledMapRenderer = new MyOrthogonalTiledMapRenderer(tiledMap, 1/32f);
         tiledMapLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Main layer");
@@ -55,7 +62,7 @@ public class GameScreen implements Screen {
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
         // Work in world units from this point onward
 
-        //tileCam will be used for entities other than the HUD and Player.
+        //mainCam will be used for entities other than the HUD and Player.
         mainCam = new OrthographicCamera(38, 38 * (h / w));
         mainCam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         mainCam.update();
@@ -65,6 +72,11 @@ public class GameScreen implements Screen {
         playerCam = new OrthographicCamera(38, 38 * (h / w));
         playerCam.position.set(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT / 2f, 0);
         playerCam.update();
+
+        //HUD cam initial position (could technically use playerCam but this gives more options in future)
+        hudCam = new OrthographicCamera(w, h);
+        hudCam.position.set(w / 2, h / 2, 0);
+        hudCam.update();
 
         // Instantiate collision check
         collisionCheck = new CollisionCheck(tiledMap, tiledMapLayer);
@@ -77,8 +89,12 @@ public class GameScreen implements Screen {
         badGuy = new BadGuy(batch, collisionCheck);
         badGuy.setLocation(new Vector2(15, 19));
 
+        // Create HUD ----------------------------------------
+        inventory = new Inventory(hudBatch);
+        //inventory.setPosition(new Vector2(0, 0));
+
         // Create input processor - used for Zoom only now....
-        Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, player));
+        Gdx.input.setInputProcessor(new GameInputProcessor(mainCam, playerCam, hudCam, player, inventory));
 
 
     }
@@ -91,6 +107,7 @@ public class GameScreen implements Screen {
 
         batch.setProjectionMatrix(mainCam.combined);
         playerBatch.setProjectionMatrix(playerCam.combined);
+        hudBatch.setProjectionMatrix(hudCam.combined);
 
         tiledMapRenderer.setView(mainCam);
         tiledMapRenderer.render();
@@ -129,13 +146,14 @@ public class GameScreen implements Screen {
         // with array of Characters (see Character class)
         player.update();
         badGuy.update();
+        inventory.update();
 
         // Center camera on player (actually centers on shadow sprite)
         mainCam.position.set(player.getLocation(),0);
 
         mainCam.update();
         playerCam.update(); // Only needed for zoom at the moment
-        //hudCam.update(); // will create this much later
+        hudCam.update();
 
         // Draw player sprite
         playerBatch.begin();
@@ -146,6 +164,11 @@ public class GameScreen implements Screen {
         batch.begin();
         badGuy.draw();
         batch.end();
+
+        // Draw HUD
+        hudBatch.begin();
+        inventory.draw();
+        hudBatch.end();
 
 
     }
@@ -180,5 +203,6 @@ public class GameScreen implements Screen {
         tiledMapRenderer.dispose();
         tiledMap.dispose();
         batch.dispose();
+        uiStage.dispose();
     }
 }
