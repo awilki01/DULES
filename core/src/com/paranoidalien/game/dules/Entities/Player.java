@@ -51,7 +51,7 @@ public class Player extends Character {
         shadowSprite = new Sprite();
 
         // One world unit high and wide
-        sprite.setSize(1, 1);
+        sprite.setSize(1, 1.5f);
 
         // Initialze vector variables
         originalLoc = new Vector2();
@@ -60,7 +60,8 @@ public class Player extends Character {
         //Initialize move booleans to false
         leftMove = rightMove = upMove = downMove = false;
 
-        sprite.setPosition(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2);
+        sprite.setPosition(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2 +
+            Constants.ENTITY_TILE_OFFSET);
     }
 
     @Override

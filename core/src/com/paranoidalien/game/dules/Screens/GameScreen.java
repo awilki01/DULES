@@ -54,9 +54,9 @@ public class GameScreen implements Screen {
         float h = Gdx.graphics.getHeight();
 
         // Main tiled map
-        tiledMap = new TmxMapLoader().load("map01.tmx");
-        tiledMapRenderer = new MyOrthogonalTiledMapRenderer(tiledMap, 1/32f);
-        tiledMapLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Main layer");
+        tiledMap = new TmxMapLoader().load("Blue_Map.tmx");
+        tiledMapRenderer = new MyOrthogonalTiledMapRenderer(tiledMap, 1/64f);
+        tiledMapLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Tile Layer 1");
 
         // Create camera and only project 35 world units wide
         // The 35 * (h / w) keeps the height sized so as to maintain the proper aspect ratio
@@ -84,10 +84,10 @@ public class GameScreen implements Screen {
         // Create characters-----------------------------------------
         // Create Player
         player = new Player(playerBatch, collisionCheck);
-        player.setLocation(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2 + 1)); // The "+ 1" is for the test map onlyddddddddd
+        player.setLocation(new Vector2(17, 88)); // The "+ 1" is for the test map onlyddddddddd
         // Create BadGuy
         badGuy = new BadGuy(batch, collisionCheck);
-        badGuy.setLocation(new Vector2(15, 19));
+        badGuy.setLocation(new Vector2(15, 89));
 
         // Create HUD ----------------------------------------
         inventory = new Inventory(hudBatch);

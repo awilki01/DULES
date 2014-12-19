@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="101" height="101" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="Blue_Map_Tiles_cut" tilewidth="64" tileheight="64">
+  <image source="Blue_Map_Tiles_cut.png" width="1024" height="1024"/>
+  <tile id="0">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="101" height="101">
+  <data encoding="base64" compression="zlib">
+   eJztm8FugzAMQClbtV3brdrO+/+PHByQJkRHYjuODe/wlFti8xInkPY2DMMNwnFRECkWrxi9nIwTLxOvFW2L/Oc+3ibejdrMTu4TH5W0yH/u42vi26jN7ORHwFb+FkhieYa1E696avUcJPVvq43uRJPn1dmJpP5tYe3EmiXPT0H7cHYSEau1u7RXg5jO7kQzp7faRzInJXu29x4fkYhOzrpmMzvpQUkeVus4m5Me1MTo6URT/2vnYG8HWicW604bH07i9YeTeP3hxO8ZZnQijaGnk9K7hcxOrO9QWjspvVvI7MT6DqW1E+0Z2cOJpvZI8u0xb1o6GQfb76i1/a3vGyT57o25jtFzz5M40X5XXX9Hre1vfd8gcbI35jpGrRPpeip1EgGtE8saUltrcdLOyfKsS+ptayfWe3wPJ5ozxd9xx6Gs3no4sayZvZxY1P678Xg1TiS18QxOWqxL6zhxss1c4yTvCZmdWOwPLfMoPe9HOYNrnfSi5xk8Yi44iZdLFCeadwCvGtsqF0k+vZ3tzcWIMWrykd4Fec2jMzqR3gVpxm9xN9j7uVo68d5vLv/419wN9n6u2Z1ox8YJTnCCk+hOsr2fHN3JONj8DqH0f4442efZ98ba3yGU/s8RJ77gBCfZnLQguxOLb06RyO7kiOAkHjiJB07igZN4HOWsAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwxy8YYMh8
+  </data>
+ </layer>
+</map>

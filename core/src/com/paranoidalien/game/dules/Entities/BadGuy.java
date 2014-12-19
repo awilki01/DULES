@@ -15,7 +15,7 @@ import com.paranoidalien.game.dules.Utils.Constants;
 public class BadGuy extends Character {
     private SpriteBatch batch;
     private Texture texture;
-    private Sprite sprite;
+    private Sprite sprite, shadowSprite;
     private Vector2 originalLoc, vec;
     private boolean leftMove, rightMove, upMove, downMove;
     private boolean currentlyMoving, collision;
@@ -28,8 +28,11 @@ public class BadGuy extends Character {
         texture = new Texture(Gdx.files.internal("red.png"));
         sprite = new Sprite(texture);
 
+        // used not for display but to represent position of sprite
+        shadowSprite = new Sprite();
+
         // One world unit high and wide
-        sprite.setSize(1, 1);
+        sprite.setSize(1, 1.5f);
 
         // Initialze vector variables
         originalLoc = new Vector2();
@@ -43,19 +46,20 @@ public class BadGuy extends Character {
 
     @Override
     public void draw(){
+        sprite.setPosition(shadowSprite.getX(), shadowSprite.getY() + Constants.ENTITY_TILE_OFFSET);
         sprite.draw(batch);
     }
 
     @Override
     public Vector2 getLocation() {
-        vec.x = sprite.getX();
-        vec.y = sprite.getY();
+        vec.x = shadowSprite.getX();
+        vec.y = shadowSprite.getY();
         return vec;
     }
 
     @Override
     public void setLocation(Vector2 vecSet) {
-        sprite.setPosition(vecSet.x, vecSet.y);
+        shadowSprite.setPosition(vecSet.x, vecSet.y);
         //sprite.setPosition(vecSet.x, vecSet.y);
     }
 
@@ -124,9 +128,11 @@ public class BadGuy extends Character {
             currentlyMoving = true;
         }
 
+        System.out.println(getLocation());
+
         if (leftMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            sprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
+            shadowSprite.translate(-(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((originalLoc.x - getLocation().x) >= 1) {
                 originalLoc.x -= 1;
                 // Snap into position
@@ -137,7 +143,7 @@ public class BadGuy extends Character {
         }
         if (rightMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            sprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
+            shadowSprite.translate(Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime(), 0.0f);
             if ((getLocation().x - originalLoc.x) >= 1) {
                 originalLoc.x += 1;
                 // Snap into position
@@ -148,7 +154,7 @@ public class BadGuy extends Character {
         }
         if (upMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            sprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
+            shadowSprite.translate(0.0f, Constants.ENTITY_SPEED * Gdx.graphics.getDeltaTime());
             if ((getLocation().y - originalLoc.y) >= 1) {
                 originalLoc.y += 1;
                 // Snap into position
@@ -159,7 +165,7 @@ public class BadGuy extends Character {
         }
         if (downMove){
             // Add logic to move one tile to right with smooth transition - the playerCam follows this
-            sprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
+            shadowSprite.translate(0.0f, -(Constants.ENTITY_SPEED) * Gdx.graphics.getDeltaTime());
             if ((originalLoc.y - getLocation().y) >= 1) {
                 originalLoc.y -= 1;
                 // Snap into position

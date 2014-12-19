@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="101" height="101" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="Tau_Map_Tiles_small" tilewidth="64" tileheight="64">
+  <image source="Tau_Map_Tiles_small.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="walls" width="101" height="101">
+  <data encoding="base64" compression="zlib">
+   eJzt2LFKw0AcwOEsIji4KdHaVdSqo/oiigo6ih1cRR/E1Wf1H6hwHLbWwzRp+IaP4wgJyf2GIzetqmoKAEAnNsJmge0evPtQ7YTdxF7YD6NwsMB5D959qJomh4njcBIm4XQBTdptclFAk/41afaUrTnsNd00qcN4No6y+UsPvmudlTY5S0yyuSbdNLn8wfc1TTQZmtImD+Euca/Jv7nO1vYmWdvb7FrqMXvOkyatSdf2ufA+TTQZunRt38L7kl41WUmT5kyyno3jX+a1Jitp0pxJHv1h1KT9JleFNNFk6D6q+f8ky/rswXcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADr4wvTtRmR
+  </data>
+ </layer>
+</map>

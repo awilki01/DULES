@@ -27,14 +27,14 @@ public class Inventory {
     public Inventory (SpriteBatch batch) {
         this.batch = batch;
 
-        texture = new Texture(Gdx.files.internal("InventorySlots.png"));
+        texture = new Texture(Gdx.files.internal("48tileGrid.png"));
         sprite = new Sprite(texture);
 
         vec = new Vector2(850, 500);
         mousePos = new Vector2();
 
         // Set sprite size in HUD coord system
-        sprite.setSize(400, 200);
+        //sprite.setSize(300, 150);
 
         //Set initial location
         this.setPosition(vec);
